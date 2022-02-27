@@ -1,4 +1,7 @@
 library(ggplot2)
+library(dplyr)
+
+incarceration_df<-read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
 
 prison_adm_total<-incarceration_df %>% 
   group_by(year) %>% 

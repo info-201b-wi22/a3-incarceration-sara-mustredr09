@@ -7,7 +7,7 @@ incarceration_df <-incarceration_df %>%
 # Load state shape data.
 state_shape <- map_data('state')
 
-# Load stsate abbrevs.
+# Load state abbrevs.
 state_abbrevs <- data.frame(state.abb, state.name)
 
 #Load dataframe i’ll be working with.

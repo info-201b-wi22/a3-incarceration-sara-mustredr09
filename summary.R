@@ -1,13 +1,6 @@
 incarceration_df<-read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
 library(dplyr)
 library('tidyverse')
-library(ggplot2)
-
-# .
-
-# I added a location column.
-incarceration_df <-incarceration_df %>% 
-  mutate(location=paste0(county_name,",",state))
 
 # 1a. Total admissions for Black and white populations.
 prison_adm_total<-incarceration_df %>% 
@@ -21,7 +14,7 @@ prison_adm_total<-incarceration_df %>%
 avg_total<-incarceration_df %>% 
   group_by(year, region) %>% 
   filter(year > 2008) %>%
-  select(year, location, state, region, county_name, black_prison_adm, black_male_prison_adm,black_female_prison_adm, white_prison_adm,
+  select(year, state, region, county_name, black_prison_adm, black_male_prison_adm,black_female_prison_adm, white_prison_adm,
          white_female_prison_adm,white_male_prison_adm) %>% 
   drop_na() %>%
   summarize(avg_black_adm = mean(black_prison_adm, na.rm=TRUE),
@@ -29,7 +22,7 @@ avg_total<-incarceration_df %>%
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
             avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),
             avg_black_female_adm=mean(black_female_prison_adm, na.rm=TRUE),
-            avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),)
+            avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),.groups = 'drop')
             
 # 2a. Total Black admissions per year, with gender. This is during the Obama administration.
 total_black_adm<-incarceration_df %>% 
@@ -54,20 +47,18 @@ avg_black_adm<-incarceration_df %>%
   drop_na() %>% 
   summarize(avg_black_adm = mean(black_prison_adm, na.rm=TRUE),
             avg_black_female_adm = mean(black_female_prison_adm, na.rm=TRUE),
-            avg_black_male_adm = mean(black_male_prison_adm, na.rm=TRUE),
-            )
+            avg_black_male_adm = mean(black_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 # 3b. Average white admissions per year, with gender. 
 #This is during the Obama administration.
 avg_white_adm<-incarceration_df %>% 
   group_by(year, state, region) %>% 
   filter(year > 2008) %>% 
-  select(year, location, state, region, county_name, white_prison_adm, white_male_prison_adm, white_female_prison_adm) %>% 
+  select(year, state, region, county_name, white_prison_adm, white_male_prison_adm, white_female_prison_adm) %>% 
   drop_na() %>% 
   summarize(avg_white_adm = mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm = mean(white_female_prison_adm, na.rm=TRUE),
-            avg_white_male_adm = mean(white_male_prison_adm, na.rm=TRUE),
-  )
+            avg_white_male_adm = mean(white_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 View(avg_black_adm)
 
@@ -119,8 +110,7 @@ avg_northeast_adm<-incarceration_df %>%
             avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),
             avg_white_adm=mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
-            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),
-  )
+            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 avg_south_adm<-incarceration_df %>% 
   filter(str_detect(incarceration_df$region,"South")) %>% 
@@ -133,8 +123,7 @@ avg_south_adm<-incarceration_df %>%
             avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),
             avg_white_adm=mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
-            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),
-  )
+            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 avg_west_adm<-incarceration_df %>% 
   filter(str_detect(incarceration_df$region,"West")) %>% 
@@ -147,8 +136,7 @@ avg_west_adm<-incarceration_df %>%
             avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),
             avg_white_adm=mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
-            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),
-  )
+            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 avg_midwest_adm<-incarceration_df %>% 
   filter(str_detect(incarceration_df$region,"Midwest")) %>% 
@@ -161,8 +149,7 @@ avg_midwest_adm<-incarceration_df %>%
             avg_black_male_adm=mean(black_male_prison_adm, na.rm=TRUE),
             avg_white_adm=mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
-            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),
-  )
+            avg_white_male_adm=mean(white_male_prison_adm, na.rm=TRUE),.groups = 'drop')
 
 # In the first section, I analyze total prison admissions for both Black and white populations, and I also highlight differences in gender (1a). 
 #I also analyze the average prison admissions for the abovementioned populations, but I focus on the different geographical regions, 
