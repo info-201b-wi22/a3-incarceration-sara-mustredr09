@@ -1,5 +1,6 @@
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 incarceration_df<-read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
 
@@ -14,14 +15,15 @@ prison_adm_total<-incarceration_df %>%
 
 ggplot(data = prison_adm_total) +
   geom_point(
-    mapping = aes(x = black_prison_adm, y = white_prison_adm, color = region),
+    mapping = aes(x = white_prison_adm, y = black_prison_adm, color = region),
     alpha = .6
   ) + 
   facet_wrap(~year)+
   scale_color_brewer(palette = "PiYG")+
-  labs(title = 'Average Black vs white incarceration during the Obama administration',
+  labs(title = 'Total Black vs white incarceration during the Obama administration',
        subtitle = 'by U.S. geographic region',
-       x = 'Average admissions of Black prisoners',
-       y = 'Average admissions of white prisoners',
+       x = 'Total admissions of white prisoners',
+       y = 'Total admissions of Black prisoners',
        fill = 'region')
+
 

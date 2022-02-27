@@ -1,7 +1,5 @@
 incarceration_df<-read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
 
-incarceration_df <-incarceration_df %>% 
-  mutate(location=paste0(county_name,",",state))
 # I‘m gonna write my steps down because it helps me understand what I’m doing. 
 
 # Load state shape data.
@@ -42,4 +40,4 @@ ggplot(state_shape_2)+
   geom_polygon(mapping=aes(x=long, y=lat, group=group, fill=state_total))+
   coord_map()+
   labs(title = 'Average admissions of Black prisoners during the Obama administration', fill = 'state_total')+
-  scale_fill_continuous(low='green', high='dark green',labels=scales::label_number_si())
+  scale_fill_continuous(low='grey', high='black',labels=scales::label_number_si())

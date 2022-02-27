@@ -1,6 +1,7 @@
 incarceration_df<-read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
 library(dplyr)
 library('tidyverse')
+library(tidyr)
 
 # 1a. Total admissions for Black and white populations.
 prison_adm_total<-incarceration_df %>% 
@@ -16,7 +17,6 @@ avg_total<-incarceration_df %>%
   filter(year > 2008) %>%
   select(year, state, region, county_name, black_prison_adm, black_male_prison_adm,black_female_prison_adm, white_prison_adm,
          white_female_prison_adm,white_male_prison_adm) %>% 
-  drop_na() %>%
   summarize(avg_black_adm = mean(black_prison_adm, na.rm=TRUE),
             avg_white_adm=mean(white_prison_adm, na.rm=TRUE),
             avg_white_female_adm=mean(white_female_prison_adm, na.rm=TRUE),
@@ -44,7 +44,6 @@ avg_black_adm<-incarceration_df %>%
   group_by(year, state, region) %>% 
   filter(year > 2008) %>% 
   select(year, region, state, county_name, black_prison_adm, black_male_prison_adm, black_female_prison_adm) %>% 
-  drop_na() %>% 
   summarize(avg_black_adm = mean(black_prison_adm, na.rm=TRUE),
             avg_black_female_adm = mean(black_female_prison_adm, na.rm=TRUE),
             avg_black_male_adm = mean(black_male_prison_adm, na.rm=TRUE),.groups = 'drop')
